@@ -37,7 +37,7 @@ function pig (){
 }
 
 function myFunction( greeting ) {
-  text(greeting, xpos/400, ypos/400, 170, 180);
+  text(greeting, xpos/2, ypos/2, 170, 180);
   noStroke()
   fill(255,192,203);
   ellipseMode(CENTER);
