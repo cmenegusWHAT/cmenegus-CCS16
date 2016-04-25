@@ -34,7 +34,8 @@ function draw() {
       //splice is a way of removing a specific
       //element from an array
       particles[i].display();
-      particles.splice(i, 2); //why 400? 
+      shorten(particles);
+      //particles.splice(i, 2); //why 400? 
     } else {
       particles[i].update();
       particles[i].display();
@@ -46,7 +47,7 @@ function Particle(loc) {
   this.loc = loc;
   this.acc = new p5.Vector();
   this.vel = new p5.Vector(cSlider.value()+random(-10,10), vSlider.value()+random(-10,10));
-  this.lifespan = 50;
+  this.lifespan = 550;
 }
 
 Particle.prototype = {
@@ -54,7 +55,7 @@ Particle.prototype = {
   update: function() {
     this.vel.add(this.acc);
     this.loc.add(this.vel);
-    this.lifespan -= 4.0;
+    this.lifespan -= .4;
 
   },
   display: function() {
