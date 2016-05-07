@@ -57,8 +57,56 @@ function draw() { //DRAW STARTS HERE!!!
   bug.move(); //bug object
   bug.display();
   
+  // stars that rotate
   
-  xpos = xpos + 2;
+  push(); // mini fast rotating bottom right
+  translate(width*0.8, height*0.7);
+  rotate(frameCount / 2.0);
+  fill(random(255), 200, 100);
+  star(0, 0, 5, 15, 4); 
+  pop();
+  
+  push(); // mini fast rotating at top
+  translate(width*0.6, height*0.15);
+  rotate(frameCount / 2.0);
+  fill(random(255), 200, random(100));
+  star(0, 0, 5, 15, 2); 
+  pop();
+  
+  push();
+  translate(width*0.50, height*0.50);
+  rotate(frameCount / 15.0);
+  fill(random(255), random(200), 100);
+  star(0, 0, 80, 3, 100); 
+  pop();
+  
+  push(); // big far upper right
+  translate(width*0.75, height*0.25);
+  rotate(frameCount / -100.0);
+  fill(random(255), 255, random(255));
+  star(0, 0, 30, 50, 55); 
+  pop();
+  
+  push(); // big far upper right
+  translate(width*0.25, height*0.90);
+  rotate(frameCount / -100.0);
+  fill(random(20), 0, random(255));
+  star(0, 0, 30, 10, 20); 
+  pop();
+  
+
+  push();
+  translate(width*0.85, height*0.80);
+  rotate(frameCount / 15.0);
+  fill(random(255), random(200), 100);
+  star(0, 0, 80, 15, 200); 
+  pop();
+  
+
+  
+  // ellipses moving horizontally across screen
+  
+  xpos = xpos + 2.5;
  
   // if the circle moves off screen, reset it's position
   if(xpos > width)
@@ -69,43 +117,52 @@ function draw() { //DRAW STARTS HERE!!!
  
   // draw a circle
   image(planet3, xpos, ypos, 15, 15);
-  image(planet1, xpos+random(30), ypos+30, 15, 15);
+  image(planet2, xpos+random(30), ypos+30, 15, 15);
   
-  //start planet system
+ //planet system starts here
  
- //center 
+ //black hole ellipse
   stroke(1);
+  fill(random(250),210,200);
+  ellipse(width/1.2, height/10, 30, 30); //center
   fill(random(50),10,0);
-  ellipse(360, 200, 30, 30)
+  //ellipse(300, 100, height/10, width/10);
+  fill(0,10,random(150));
+  fill(random(250),200,0);
+  ellipse(775, 300, 20, 20);
   
-  // circular orbiting planet
+  
+  image(planet3, random(200), random(800), 10, 10); //spastic yellow lights on the left
+  image(planet0, random(height * .2), random(width *.5), 15, 15);
+  
+  // circular orbiting planet 1
   var amplitude = height/5;
   angle +=2.0;
   var x,y;
   y=sin(radians(angle)) * amplitude;
   x=cos(radians(angle)) * amplitude;
   fill(100);
-  image(planet2, x+150, y+150,10,10);
+  image(planet2, x+250, y+250,10,10);
+  
+  // random planet
+  image(planet2, width-250, height-250,10,10);
    
    
-   // angled orbiting planet
+  // angled orbiting planet
   var x,y;
    y=sin(radians(angle)) * amplitude;
     //try adding an offset to our angle here
    x=sin(radians(angle)) * amplitude;
    fill(100);
-   image(planet0, x+150,y+150,20,20);
+   image(planet0, x+250,y+250,20,20);
+   
+   // function Orbit() { // one day I will make the above three an object!!!!
+   //this.x = cos(radians(angle)) * amplitude;
+   //};
   
     
-   image(planet1, 150, 150, 15,15); //center star/planet
-   
-  // I think this was extra but I'm scared to delete
-  //this.display = function() {
-   // noStroke();
-  //  fill(200,0,123);
-  //  ellipse(this.x, this.y, this.diameter, this.diameter);
-  //  ellipse(this.z, this.a, this.diameter+200, this.diameter+200);
- // }
+   image(planet1, 250, 250, 15,15); //center star/planet
+
   
   // insane ellipse orbiting system begins now!
   
@@ -147,6 +204,23 @@ function draw() { //DRAW STARTS HERE!!!
 } // DRAW ENDS HERE!!!
 
 
+// turning star class!
+function star(x, y, radius1, radius2, npoints) {
+  var angle = TWO_PI / npoints;
+  var halfAngle = angle/2.0;
+  beginShape();
+  for (var a = 0; a < TWO_PI; a += angle) {
+    var sx = x + cos(a) * radius2;
+    var sy = y + sin(a) * radius2;
+    vertex(sx, sy);
+    sx = x + cos(a+halfAngle) * radius1;
+    sy = y + sin(a+halfAngle) * radius1;
+    vertex(sx, sy);
+  }
+  endShape(CLOSE);
+}
+
+// Jitter spastic motion
 function Jitter() {
   this.x = random(width);
   this.y = random(height);
@@ -163,9 +237,10 @@ function Jitter() {
 this.display = function() {
     noStroke();
     fill(200,0,123);
-    image(planet1, this.x+200, this.y+100, this.diameter-10, this.diameter-10);
-    image(planet3, this.x+300, this.y+150, this.diameter-10, this.diameter-10);
-    image(planet0, this.x+500, this.y+190, this.diameter-10, this.diameter-10);
+    image(planet1, this.x+700, this.y+100, this.diameter-10, this.diameter-10);
+    image(planet3, this.x+800, this.y+150, this.diameter-10, this.diameter-10);
+    image(planet0, this.x+500, this.y+60, this.diameter-10, this.diameter-10);
+    image(planet2, this.x+800, this.y+80, this.diameter, this.diameter);
   }
 };
 
